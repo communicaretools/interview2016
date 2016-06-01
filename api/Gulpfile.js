@@ -3,13 +3,13 @@ var gulp = require('gulp'),
   jasmine = require('gulp-jasmine');
 
 gulp.task('start', function () {
-    nodemon({
+    return nodemon({
         script: 'app/index.js'
     });
 });
 
 gulp.task('test', function () {
-    gulp.src('app/**/*.tests.js')
+    return gulp.src('app/**/*.tests.js')
         // gulp-jasmine works on filepaths so you can't have any plugins before it
         .pipe(jasmine());
 });
