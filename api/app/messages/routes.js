@@ -1,8 +1,13 @@
 var router = require('express').Router();
+var Message = require('./models').Message;
+
+// Limit the fields that we return to clients (we don't want to expose everything)
+var apiFields = 'subject body';
 
 router.get('/:id', function getMessage(req, res) {
-    var msg = {_id: req.params.id, subject: 'hard-coded'};
-    return res.status(200).json(msg).send();
+    Message.findOne({_id: req.params.id}, apiFields, function (err, msg) {
+        res.json(msg);
+    });
 });
 
 module.exports = router;
