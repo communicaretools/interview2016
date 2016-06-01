@@ -3,6 +3,6 @@ var gulp = require('gulp'),
 
 gulp.task('start', function () {
     nodemon({
-        script: 'app.js'
+        script: 'app/app.js'
     });
 });

@@ -2,13 +2,13 @@ version: "2"
 services:
     api:
         image: sps/msg-backend-test
-        build: server/
+        build: api/
         ports:
             - 3000:3000
         links:
             - mongo
         volumes:
-            - ./server:/home/app/webapp
+            - ./api:/home/app/webapp
         environment:
             - NODE_ENV=development
     mongo:
