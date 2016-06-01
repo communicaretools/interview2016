@@ -1,9 +1,14 @@
-FROM phusion/passenger-nodejs:0.9.18
-# Enable nginx/passenger
-RUN rm -f /etc/service/nginx/down
-RUN rm -f /etc/nginx/sites-enabled/default
-ADD nginx.conf /etc/nginx/sites-enabled/webapp.conf
+FROM node:6.2.0
+EXPOSE 3000
+
+# Install global npm packages
+RUN npm install -g gulp-cli@1.2.1
+
 # Install application
-RUN mkdir /home/app/webapp
+RUN mkdir -p /home/app/webapp
+WORKDIR /home/app/webapp
 ADD . /home/app/webapp
-RUN chown -R app:app /home/app/*
+
+# Install dependencies and provide default command
+RUN cd /home/app/webapp && npm install
+CMD ["gulp", "start"]
