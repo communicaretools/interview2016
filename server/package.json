@@ -1,0 +1,14 @@
+{
+  "name": "msg-backend-test",
+  "version": "1.0.0",
+  "description": "Messaging backend, test code",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.13.4"
+  }
+}

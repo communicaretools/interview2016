@@ -1,0 +1,17 @@
+version: "2"
+services:
+    api:
+        image: sps/msg-backend-test
+        build: server/
+        ports:
+            - 8080:80
+        links:
+            - mongo
+        volumes:
+            - ./server:/home/app/webapp
+        environment:
+            - NODE_ENV=development
+    mongo:
+        image: mongo:3.2.5
+        volumes:
+            - ./data/mongodb:/data/db
