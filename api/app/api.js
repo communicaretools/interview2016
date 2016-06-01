@@ -6,6 +6,13 @@ console.log('Connecting to db', dbName);
 mongoose.connect('mongodb://mongo/');
 
 var app = express();
+// Error handler
+app.use(function logErrors(err, req, res, next) {
+  console.error('An error occurred', err);
+  console.error(err.stack);
+  next(err);
+});
+
 app.get('/', function (req, res) {
   res.send('Hello, World!');
 });
