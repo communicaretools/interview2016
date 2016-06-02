@@ -5,13 +5,13 @@ var tokens = require('./tokens');
 function requireToken(req, res, next) {
     var header = req.get('Authorization');
     if (!header || !header.startsWith('Bearer ')) {
-        return res.status(403).json({login: '/api/auth/session'});
+        return res.status(403).json({login: '/api/auth/token'});
     }
 
     var token = header.substring('Bearer '.length);
     tokens.validate(token, function handleToken(err, loginInfo) {
         if (err) {
-            res.status(403).json({login: '/api/auth/session'});
+            res.status(403).json({login: '/api/auth/token'});
             return;
         }
         req.userid = loginInfo.userid;

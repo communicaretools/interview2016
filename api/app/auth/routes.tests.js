@@ -10,10 +10,34 @@ describe('/api/auth routes', function () {
               valid.save().then(done);
           });
     });
-    /*describe('when posting a valid username/password combination to /api/auth/session', function (done) {
-        app.post('/api/session')
-          .send({username: 'test', password: 'pazzw0rd1337'})
-          .expect(200)
-          .end(app.end(done));
-    });*/
+
+    describe('when posting a valid username/password combination to /api/auth/token', function () {
+        it('should return a token', function (done) {
+            app.post('/api/auth/token')
+              .send({username: 'test', password: 'pazzw0rd1337'})
+              .expect(200)
+              .expect(function (res) {
+                  expect(res.body.token).toBeDefined();
+              })
+              .end(app.end(done));
+        });
+    });
+
+    describe('when posting an incorrect password to /api/auth/token', function () {
+        it('should return a token', function (done) {
+            app.post('/api/auth/token')
+              .send({username: 'test', password: 'wrong'})
+              .expect(403)
+              .end(app.end(done));
+        });
+    });
+
+    describe('when posting an invalid username to /api/auth/token', function () {
+        it('should return a token', function (done) {
+            app.post('/api/auth/token')
+              .send({username: 'foobar', password: 'pazzw0rd1337'})
+              .expect(403)
+              .end(app.end(done));
+        });
+    });
 });

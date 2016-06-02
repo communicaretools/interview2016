@@ -12,7 +12,7 @@ describe('The requireToken middleware', function () {
         it('should return a 403 with information on where to find the auth action', function (done) {
             var app = request(express().use(requireToken));
             app.get('/')
-               .expect(403, {login: '/api/auth/session'})
+               .expect(403, {login: '/api/auth/token'})
                .end(testApp.end(done));
         });
     });
@@ -22,7 +22,7 @@ describe('The requireToken middleware', function () {
             var app = request(express().use(requireToken));
             app.get('/')
                .set('Authorization', 'Bearer ' + invalidToken)
-               .expect(403, {login: '/api/auth/session'})
+               .expect(403, {login: '/api/auth/token'})
                .end(testApp.end(done));
         });
     });

@@ -2,8 +2,8 @@ var db = require('../db');
 var User = require('./User');
 
 describe('The User model', function () {
-    beforeEach(function clearAllUsers() {
-        User.remove();
+    beforeEach(function clearAllUsers(done) {
+        User.remove(done);
     });
     describe('when creating and saving a User', function () {
         beforeEach(function (done) {
