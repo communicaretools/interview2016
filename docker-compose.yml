@@ -15,3 +15,10 @@ services:
         image: mongo:3.2.5
         volumes:
             - ./data/mongodb:/data/db
+    client:
+        image: sps/msg-client-test
+        build: client/
+        ports:
+            - 8100:8100
+        links:
+            - api
