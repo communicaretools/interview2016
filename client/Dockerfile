@@ -3,7 +3,7 @@ FROM node:6.2.0
 EXPOSE 8100
 
 # Install global npm packages
-RUN npm install -g ionic@1.7.15 cordova@6.1.1
+RUN npm install -g ionic@1.7.15 cordova@6.1.1 gulp-cli@1.2.1
 
 # Install application
 RUN mkdir -p /home/app/webapp
