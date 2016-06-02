@@ -1,3 +1,4 @@
+var db = require('../db');
 var models = require('./models');
 var Message = models.Message;
 
