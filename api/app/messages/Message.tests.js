@@ -1,6 +1,5 @@
 var db = require('../db');
-var models = require('./models');
-var Message = models.Message;
+var Message = require('./Message');
 
 describe('The Message model', function () {
     beforeEach(function clearMessages(done) {

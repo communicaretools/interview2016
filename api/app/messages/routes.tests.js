@@ -1,6 +1,6 @@
 var db = require('../db');
 var app = require('../test-app.js');
-var Message = require('./models').Message;
+var Message = require('./Message');
 
 describe('The messages router', function () {
     beforeEach(function clearMessages(done) {

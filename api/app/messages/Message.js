@@ -5,6 +5,4 @@ var Message = mongoose.model('Message', {
     body: String
 });
 
-module.exports = {
-    Message: Message
-};
+module.exports = Message;

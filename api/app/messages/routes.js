@@ -1,5 +1,5 @@
 var router = require('express').Router();
-var Message = require('./models').Message;
+var Message = require('./Message');
 
 // Limit the fields that we return to clients (we don't want to expose everything)
 var apiFields = 'subject body';
