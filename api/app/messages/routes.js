@@ -10,4 +10,16 @@ router.get('/:id', function getMessage(req, res) {
     });
 });
 
+router.get('/inbox', function getInbox() {
+    res.json([]);
+});
+
+router.get('/outbox', function getOutbox() {
+    res.json([]);
+});
+
+router.post('/outbox', function sendMessage() {
+    res.status(201);
+});
+
 module.exports = router;
