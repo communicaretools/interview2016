@@ -6,16 +6,19 @@ var Message = require('./Message');
 router.use(requireToken);
 
 // Limit the fields that we return to clients (we don't want to expose everything)
-var apiFields = 'subject body';
+var messageFields = 'subject body from to';
+var userFields = 'username name';
 
 router.get('/inbox', function getInbox(req, res) {
-    Message.find({owner: req.userid, location: 'inbox'}, apiFields, function (err, msgs) {
-        if (err) {
-            res.status(500).json({error: err});
-            return;
-        }
-        res.json(msgs);
-    });
+    Message.find({owner: req.userid, location: 'inbox'}, messageFields)
+        .populate('from to', userFields)
+        .exec(function (err, msgs) {
+            if (err) {
+                res.status(500).json({error: err});
+                return;
+            }
+            res.json(msgs);
+        });
 });
 
 router.get('/outbox', function getOutbox() {
@@ -27,13 +30,15 @@ router.post('/outbox', function sendMessage() {
 });
 
 router.get('/:id', function getMessage(req, res) {
-    Message.findOne({_id: req.params.id, owner: req.userid}, apiFields, function (err, msg) {
-        if (err) {
-            res.status(404).json(null);
-            return;
-        }
-        res.json(msg);
-    });
+    Message.findOne({_id: req.params.id, owner: req.userid}, messageFields)
+        .populate('from to', userFields)
+        .exec(function (err, msg) {
+            if (err) {
+                res.status(404).json(null);
+                return;
+            }
+            res.json(msg);
+        });
 });
 
 module.exports = router;

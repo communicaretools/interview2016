@@ -5,8 +5,8 @@ var Message = mongoose.model('Message', {
     location: String,  // 'inbox' or 'outbox'
     isRead: Boolean,
 
-    from: mongoose.Schema.Types.ObjectId,
-    to: [mongoose.Schema.Types.ObjectId],
+    from: {type: mongoose.Schema.Types.ObjectId, ref: 'User'},
+    to: [{type: mongoose.Schema.Types.ObjectId, ref: 'User'}],
     subject: String,
     body: String
 });
