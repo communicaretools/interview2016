@@ -12,8 +12,14 @@ Then point your browser to `localhost:8100` for a GUI, or `curl` you way around 
 For the rest of this guide, `docker-compose` will be abbreviated as `dc`; if you're on bash, executing `alias dc=docker-compose` will give you the same convenience (stick it in `.bashrc` for persistent joy).
 
 ## Backend
-The backend consists of a node.js server container with an express.js app, and a mongodb container. For a rationale behind the file-structure of the app, see the readme of [this repository](https://github.com/focusaurus/express_code_structure). The test server is reloaded automatically when the file system beneath `app/` changes; you can find the api at `localhost:3000`:
+The backend consists of a node.js server container with an express.js app, and a mongodb container. For a rationale behind the file-structure of the app, see the readme of [this repository](https://github.com/focusaurus/express_code_structure).
 
+In the `Gulpfile`, there is a simple data generator that seeds the development database with three users (`admin`, `anna` and `don`; all passwords are "test") and a few messages; run it this way:
+```
+$ dc exec api gulp populate-db
+```
+
+When developing, the test server is reloaded automatically when the file system beneath `app/` changes; you can find the api at `localhost:3000`:
 ```json
 $ curl -X GET localhost:3000/api/messages/inbox
 {
@@ -53,11 +59,6 @@ Unit tests are provided in jasmine, as that is the default for ionic apps (the c
 $ dc exec api gulp test
 ```
 
-The `Gulpfile` also contains a small data generator to seed the database with the three users `admin`, `anna` and `don` (all passwords are "test") and a few messages; run it this way:
-```
-$ dc exec api gulp populate-db
-```
-
 If you need to inspect/edit the database, or empty some of it:
 ```
 $ dc exec mongo mongo msg_api_development
@@ -68,10 +69,4 @@ $ dc exec mongo mongo msg_api_development
 ```
 
 ## Client
-TODO
-
-## Assignment
-Implement the following:
-1. Backend for getting possible receivers, at `GET /api/users`.
-2. A compose message form, backed by a `POST /api/messages/outbox`.
-3. List of sent messages, backed by `GET /api/messages/outbox`.
+The client is a fairly standard angularjs/ionic app, except that the files are structured per feature/area rather than by framework concept (controllers, views, etc).
