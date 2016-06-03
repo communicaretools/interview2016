@@ -1,10 +1,10 @@
 # Interview assignment 2016
-This project contains a simple email service, consisting of a nodejs powered backend persisting to mongodb and an ionic/angularjs mobile app.
+This project contains a simple email-like messaging service, consisting of a nodejs-based backend persisting to mongodb, and an ionic/angularjs mobile app.
 
 All components are realized in docker containers, meaning that to get started, all you have to do is this:
 
 ```
-$ docker-compose up
+$ docker-compose up -d
 ```
 
 Then point your browser to `localhost:8100` for a GUI, or `curl` you way around `localhost:3000/api` to explore the api.
@@ -14,9 +14,38 @@ For the rest of this guide, `docker-compose` will be abbreviated as `dc`; if you
 ## Backend
 The backend consists of a node.js server container with an express.js app, and a mongodb container. For a rationale behind the file-structure of the app, see the readme of [this repository](https://github.com/focusaurus/express_code_structure). The test server is reloaded automatically when the file system beneath `app/` changes; you can find the api at `localhost:3000`:
 
-```
-$ curl localhost:3000
-Hello, World!
+```json
+$ curl -X GET localhost:3000/api/messages/inbox
+{
+    "login":"/api/auth/token"
+}
+
+$ curl -X POST localhost:3000/api/auth/token \
+       -H 'Content-Type: application/json' \
+       -d '{"username":"admin", "password":"test"}'
+{
+    "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyaWQiOiI1NzUwOGY1MmY0NmZkYTcwMTg2NWQ4NjUiLCJpYXQiOjE0NjQ5MDE0OTksImV4cCI6MTQ2NTUwNjI5OX0.lPqNsYxVajtARztGzAxY3YCNNp9RL-Lr6aBjtS1qaPs"
+}
+
+$ curl -X GET localhost:3000/api/messages/inbox \
+       -H 'Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyaWQiOiI1NzUwOGY1MmY0NmZkYTcwMTg2NWQ4NjUiLCJpYXQiOjE0NjQ5MDE0OTksImV4cCI6MTQ2NTUwNjI5OX0.lPqNsYxVajtARztGzAxY3YCNNp9RL-Lr6aBjtS1qaPs'
+[
+  {
+      "_id":"57508f52f46fda701865d868",
+      "subject":"One",
+      "body":"Test message"
+  },
+  {
+      "_id":"57508f52f46fda701865d869",
+      "subject":"Two",
+      "body":"Test message"
+  },
+  {
+      "_id":"57508f52f46fda701865d86a",
+      "subject":"Three",
+      "body":"Test message"
+  }
+]
 ```
 
 Unit tests are provided in jasmine, as that is the default for ionic apps (the client). All files named `*.tests.js` are expected to contain tests. To run the tests:
@@ -24,7 +53,7 @@ Unit tests are provided in jasmine, as that is the default for ionic apps (the c
 $ dc exec api gulp test
 ```
 
-The `Gulpfile` also contains a small data generator, to seed the database with the three users `admin`, `anna` and `don` and a few messages; it is run this way:
+The `Gulpfile` also contains a small data generator to seed the database with the three users `admin`, `anna` and `don` (all passwords are "test") and a few messages; run it this way:
 ```
 $ dc exec api gulp populate-db
 ```
