@@ -11,7 +11,7 @@ describe('The messages router', function () {
     describe('when GET-ing a particular message', function () {
         var messageId;
         beforeEach(function (done) {
-            var msg = new Message({owner: app.defaultUser, from: app.defaultUser, to: [app.defaultUser], subject: 'test', body: 'test message'});
+            var msg = new Message({owner: app.defaultUser, isRead: false, from: app.defaultUser, to: [app.defaultUser], subject: 'test', body: 'test message'});
             msg.save(function (err, saved) {
                 messageId = saved._id;
             }).then(function () {
@@ -27,7 +27,8 @@ describe('The messages router', function () {
                     from: {_id: app.defaultUser, username: 'test', name: 'Test Testersen'},
                     to: [{_id: app.defaultUser, username: 'test', name: 'Test Testersen'}],
                     subject: 'test',
-                    body: 'test message'
+                    body: 'test message',
+                    isRead: true
                 })
                 .end(app.end(done));
         });

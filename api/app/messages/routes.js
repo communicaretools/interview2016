@@ -37,7 +37,10 @@ router.get('/:id', function getMessage(req, res) {
                 res.status(404).json(null);
                 return;
             }
-            res.json(msg);
+            msg.isRead = true;
+            msg.save(function () {
+                res.json(msg);
+            });
         });
 });
 
