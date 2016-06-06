@@ -3,10 +3,13 @@ angular.module('starter.auth')
         '$rootScope',
         '$q',
         'pendingRequests',
-        function ($rootScope, $q, pendingRequests) {
+        '$log',
+        function ($rootScope, $q, pendingRequests, $log) {
             return {
                 'responseError': function(rejection) {
+                    $log.debug('Intercepted a failed request');
                     if (rejection.status == 403) {
+                        $log.debug('Requesting login because of 403 response to request');
                         var deferred = $q.defer();
                         pendingRequests.queue(rejection, deferred);
                         $rootScope.$broadcast('auth.requestLogin');
@@ -17,33 +20,39 @@ angular.module('starter.auth')
             };
         }
     ])
-    .service("pendingRequests", ['$rootScope', '$injector', function ($rootScope, $injector) {
-        var requestQueue = [];
-        this.queue = function (response, deferred) {
-            requestQueue.push({
-                config: response.config,
-                deferred: deferred
-            });
-        };
-        var retryAll = function (authHeader) {
-            var $http = $injector.get('$http');
-            var retry = function (req) {
-                req.config.headers = angular.extend({}, req.config.headers || {}, authHeader);
-                $http(req.config).then(function (response) {
-                    $rootScope.$broadcast('auth.loginSucceeded');
-                    req.deferred.resolve(response);
+    .service("pendingRequests", [
+        '$rootScope',
+        '$injector',
+        '$log',
+        function ($rootScope, $injector, $log) {
+            var requestQueue = [];
+            this.queue = function (response, deferred) {
+                requestQueue.push({
+                    config: response.config,
+                    deferred: deferred
                 });
             };
+            var retryAll = function (authHeader) {
+                var $http = $injector.get('$http');
+                var retry = function (req) {
+                    $log.debug('Retrying request', req.config, 'with authorization', authHeader);
+                    req.config.headers = angular.extend({}, req.config.headers || {}, authHeader);
+                    $http(req.config).then(function (response) {
+                        $rootScope.$broadcast('auth.loginSucceeded');
+                        req.deferred.resolve(response);
+                    });
+                };
 
-            while (requestQueue.length > 0) {
-                var item = requestQueue.pop();
-                retry(item);
-            }
-        };
+                while (requestQueue.length > 0) {
+                    var item = requestQueue.pop();
+                    retry(item);
+                }
+            };
 
-        $rootScope.$on('auth.loginSucceeded', function (event, token) {
-            retryAll({ 'Authorization': 'Bearer ' + token });
-        });
+            $rootScope.$on('auth.loginSucceeded', function (event, token) {
+                $log.debug('Login succeeded, retrying failed requests');
+                retryAll({ 'Authorization': 'Bearer ' + token });
+            });
     }])
     .config([
         '$httpProvider',

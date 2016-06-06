@@ -1,5 +1,15 @@
 describe('The outgoing requests decorator (addAuthTokenToOutgoingRequests)', function () {
-    beforeEach(module('starter.auth'));
+    beforeEach(module('starter.auth', function ($provide) {
+        var modalStub = {
+            show: angular.noop,
+            hide: angular.noop
+        };
+        $provide.service('$ionicModal', function () {
+            return {
+                fromTemplateUrl: function () {return {then: function (cb) {cb(modalStub)}};}
+            };
+        });
+    }));
 
     describe('when no token has been set', function () {
         it('should not decorate the requests', inject(function (addAuthTokenToOutgoingRequests) {

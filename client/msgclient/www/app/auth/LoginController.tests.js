@@ -1,10 +1,20 @@
 describe('The login GUI (LoginController and friends)', function () {
-    beforeEach(module('starter.auth'));
+    var showModal;
+    beforeEach(module('starter.auth', function ($provide) {
+        showModal = jasmine.createSpy('modal.show');
+        var modalStub = {
+            show: showModal,
+            hide: angular.noop
+        };
+        $provide.service('$ionicModal', function () {
+            return {
+                fromTemplateUrl: function () {return {then: function (cb) {cb(modalStub)}};}
+            };
+        });
+    }));
     describe('when a login is requested', function () {
-        var showModal;
         beforeEach(inject(function ($rootScope, $q, $ionicModal) {
             var loadModal = $q.defer();
-            showModal = jasmine.createSpy('modal.show');
             var modalSpy = spyOn($ionicModal, 'fromTemplateUrl').and.callThrough().and.returnValue(loadModal.promise);
 
             // Ensure that the loginModal service is loaded *after* setting

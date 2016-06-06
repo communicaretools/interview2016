@@ -1,9 +1,11 @@
 angular.module('starter.auth')
     .factory('addAuthTokenToOutgoingRequests', [
         '$rootScope',
-        function ($rootScope) {
+        '$log',
+        function ($rootScope, $log) {
             var token;
             $rootScope.$on('auth.loginSucceeded', function (event, authToken) {
+                $log.debug('Registering token for addition to outgoing requests', authToken);
                 token = authToken;
             });
 

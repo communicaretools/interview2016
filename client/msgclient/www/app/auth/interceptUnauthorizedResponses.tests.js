@@ -1,5 +1,15 @@
 describe('The unauthorized response interceptor', function () {
-    beforeEach(module('starter.auth'));
+    beforeEach(module('starter.auth', function ($provide) {
+        var modalStub = {
+            show: angular.noop,
+            hide: angular.noop
+        };
+        $provide.service('$ionicModal', function () {
+            return {
+                fromTemplateUrl: function () {return {then: function (cb) {cb(modalStub)}};}
+            };
+        });
+    }));
     describe('when detecting a 403 response', function () {
         var loginRequested, requestSucceeded;
 
