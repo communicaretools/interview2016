@@ -20,6 +20,7 @@ services:
         build: client/
         ports:
             - 8100:8100
+            - 9876:9876
         links:
             - api
         volumes:

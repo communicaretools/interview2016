@@ -1,1 +1,1 @@
-angular.module('starter.auth', []);
+angular.module('starter.auth', ['ionic']);

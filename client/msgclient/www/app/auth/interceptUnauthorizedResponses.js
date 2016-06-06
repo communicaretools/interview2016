@@ -9,7 +9,7 @@ angular.module('starter.auth')
                     if (rejection.status == 403) {
                         var deferred = $q.defer();
                         pendingRequests.queue(rejection, deferred);
-                        $rootScope.$emit('auth.requestLogin');
+                        $rootScope.$broadcast('auth.requestLogin');
                         return deferred.promise;
                     }
                     return $q.reject(rejection);
