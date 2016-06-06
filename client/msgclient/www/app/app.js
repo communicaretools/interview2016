@@ -40,7 +40,7 @@ angular.module('starter', ['ionic', 'starter.auth', 'starter.messages'])
       }
     })
     .state('app.read', {
-      url: '/messages/read/:messageId',
+      url: '/messages/read/:id',
       views: {
         'menuContent': {
           templateUrl: 'app/messages/read.html',

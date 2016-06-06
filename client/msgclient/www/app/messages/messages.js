@@ -21,6 +21,12 @@ angular.module('starter.messages')
 
             }
 
+            function getMessage(id, callback) {
+                $http.get('/api/messages/' + id)
+                    .success(data => callback(null, data))
+                    .error(err => callback(err, null));
+            }
+
             function send(message, callback) {
 
             }
@@ -28,6 +34,7 @@ angular.module('starter.messages')
             return {
                 getInbox: getInbox,
                 getOutbox: getOutbox,
+                getMessage: getMessage,
                 send: send
             };
         }

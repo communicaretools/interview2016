@@ -1,7 +1,7 @@
 <ion-view view-title="Inbox">
   <ion-content>
     <ion-list>
-      <ion-item ng-repeat="message in inbox.messages" href="#/app/messages/read/{{message.id}}">
+      <ion-item ng-repeat="message in inbox.messages" href="#/app/messages/read/{{message._id}}">
         {{message.from.name}}: {{message.subject}}
       </ion-item>
     </ion-list>
