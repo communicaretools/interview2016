@@ -35,7 +35,7 @@ describe('The login GUI (LoginController and friends)', function () {
         });
     });
 
-    describe('when submitting login details', function () {
+    describe('when submitting valid login details', function () {
         var registeredToken;
         beforeEach(inject(function ($httpBackend, $controller, $rootScope) {
             $httpBackend.expectPOST('/api/auth/token', {username: 'test', password: 'pwd'}).respond({token: 'the-token'});
@@ -51,6 +51,25 @@ describe('The login GUI (LoginController and friends)', function () {
 
         it('emits an event with the token', function () {
             expect(registeredToken).toEqual('the-token');
+        });
+    });
+
+    describe('when submitting invalid login details', function () {
+        var ctl;
+        beforeEach(inject(function ($httpBackend, $controller, $rootScope) {
+            $httpBackend.expectPOST('/api/auth/token', {username: 'test', password: 'pwd'}).respond(403, {});
+            $rootScope.$on('auth.loginSucceeded', (event, token) => fail('should not succeed with invalid credentials'));
+            ctl = $controller('LoginController', {loginModal: {close: angular.noop}});
+            ctl.doLogin({ username: 'test', password: 'pwd' });
+            $httpBackend.flush();
+        }));
+
+        it('posts the credentials to the api', inject(function ($httpBackend) {
+            $httpBackend.verifyNoOutstandingExpectation();
+        }));
+
+        it('sets an error message for the view', function () {
+            expect(ctl.invalidCredentials).toEqual(true);
         });
     });
 });

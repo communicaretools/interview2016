@@ -16,6 +16,9 @@
           <span class="input-label">Password</span>
           <input type="password" ng-model="loginData.password">
         </label>
+        <label class="item assertive" ng-show="login.invalidCredentials">
+            <i class="icon ion-alert-circled"></i> Unknown username/password
+        </label>
         <label class="item">
           <button class="button button-block button-positive" type="submit">Log in</button>
         </label>
