@@ -24,7 +24,7 @@ services:
         links:
             - api
         volumes:
-            - ./client/msgclient:/home/app/webapp
+            - ./client:/home/app/webapp
         tty: true
         stdin_open: true
 volumes:
