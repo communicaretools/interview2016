@@ -2,15 +2,6 @@ angular.module('starter.messages')
     .service('messages', [
         '$http',
         function ($http) {
-            var Message = function messageConstructor(data) {
-                angular.copy(data, this);
-            };
-            Message.prototype.generateReply = function generateReply() {
-                var reply = new Message(this);
-                reply.to = this.from;
-                return reply;
-            };
-
             function getInbox(callback) {
                 $http.get('/api/messages/inbox')
                     .success(data => callback(null, data))
