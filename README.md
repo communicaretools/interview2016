@@ -70,3 +70,9 @@ $ dc exec mongo mongo msg_api_development
 
 ## Client
 The client is a fairly standard angularjs/ionic app, except that the files are structured per feature/area rather than by framework concept (controllers, views, etc).
+
+In order to run unit tests, run:
+```
+$ dc exec client gulp test
+```
+...and point your browser at `http://localhost:9876`
