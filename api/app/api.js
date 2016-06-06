@@ -11,6 +11,7 @@ app.get('/', function (req, res) {
 });
 app.use('/api/auth', require('./auth/routes.js'));
 app.use('/api/messages', require('./messages/routes.js'));
+app.use('/api/users', require('./users/routes.js'));
 
 // Error handler
 app.use(function logErrors(err, req, res, next) {
