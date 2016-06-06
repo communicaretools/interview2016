@@ -4,10 +4,12 @@ This project contains a simple email-like messaging service, consisting of a nod
 All components are realized in docker containers, meaning that to get started, all you have to do is this:
 
 ```
+$ docker-compose run --rm api npm install
+$ docker-compose run --rm client npm install
 $ docker-compose up -d
 ```
 
-Then point your browser to `localhost:8100` for a GUI, or `curl` you way around `localhost:3000/api` to explore the api.
+Then point your browser to `localhost:8100` for a GUI, or `curl` you way around `localhost:3000/api` to explore the api. The two first commands are not required after the first initialization.
 
 For the rest of this guide, `docker-compose` will be abbreviated as `dc`; if you're on bash, executing `alias dc=docker-compose` will give you the same convenience (stick it in `.bashrc` for persistent joy).
 
