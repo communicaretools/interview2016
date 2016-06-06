@@ -14,7 +14,7 @@ For the rest of this guide, `docker-compose` will be abbreviated as `dc`; if you
 ## Backend
 The backend consists of a node.js server container with an express.js app, and a mongodb container. For a rationale behind the file-structure of the app, see the readme of [this repository](https://github.com/focusaurus/express_code_structure).
 
-In the `Gulpfile`, there is a simple data generator that seeds the development database with three users (`admin`, `anna` and `don`; all passwords are "test") and a few messages; run it this way:
+In the `Gulpfile`, there is a simple data generator that seeds the development database with three users (`admin`, `anna` and `don`; all passwords are set to *test*) and a few messages; run it this way:
 ```
 $ dc exec api gulp populate-db
 ```
@@ -54,7 +54,7 @@ $ curl -X GET localhost:3000/api/messages/inbox \
 ]
 ```
 
-Unit tests are provided in jasmine, as that is the default for ionic apps (the client). All files named `*.tests.js` are expected to contain tests. To run the tests:
+Unit tests are provided in jasmine, as that is the default for ionic apps (the client). All files named `*.tests.js` are expected to contain tests, and for better discoverability, test files are located next to the units they test. To run the tests:
 ```
 $ dc exec api gulp test
 ```
@@ -71,7 +71,7 @@ $ dc exec mongo mongo msg_api_development
 ## Client
 The client is a fairly standard angularjs/ionic app, except that the files are structured per feature/area rather than by framework concept (controllers, views, etc).
 
-In order to run unit tests, run:
+Unit tests follow the same conventions as in the backend, with the test files next to the units they test. In order to run unit tests, run:
 ```
 $ dc exec client gulp test
 ```
