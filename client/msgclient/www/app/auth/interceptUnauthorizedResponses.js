@@ -38,7 +38,6 @@ angular.module('starter.auth')
                     $log.debug('Retrying request', req.config, 'with authorization', authHeader);
                     req.config.headers = angular.extend({}, req.config.headers || {}, authHeader);
                     $http(req.config).then(function (response) {
-                        $rootScope.$broadcast('auth.loginSucceeded');
                         req.deferred.resolve(response);
                     });
                 };
