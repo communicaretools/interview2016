@@ -3,7 +3,7 @@ angular.module('starter.messages')
         'messages',
         '$log',
         function (messages, $log) {
-            $log.debug('Starting InboxController');
-            
+            $log.debug('Starting ComposeController');
+
         }
     ]);
