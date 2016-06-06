@@ -12,7 +12,7 @@ angular.module('starter.messages')
             };
 
             function getInbox(callback) {
-                $http.get('api:3000/api/messages/inbox')
+                $http.get('/api/messages/inbox')
                     .success(data => callback(null, data))
                     .error(err => callback(err, null));
             }

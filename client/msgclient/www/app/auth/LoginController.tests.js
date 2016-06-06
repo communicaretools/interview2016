@@ -28,7 +28,7 @@ describe('The login GUI (LoginController and friends)', function () {
     describe('when submitting login details', function () {
         var registeredToken;
         beforeEach(inject(function ($httpBackend, $controller, $rootScope) {
-            $httpBackend.expectPOST('api:3000/api/auth/token', {username: 'test', password: 'pwd'}).respond({token: 'the-token'});
+            $httpBackend.expectPOST('/api/auth/token', {username: 'test', password: 'pwd'}).respond({token: 'the-token'});
             $rootScope.$on('auth.loginSucceeded', (event, token) => registeredToken = token);
             var ctl = $controller('LoginController', {loginModal: {close: angular.noop}});
             ctl.doLogin({ username: 'test', password: 'pwd' });

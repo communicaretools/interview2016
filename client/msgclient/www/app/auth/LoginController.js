@@ -24,7 +24,7 @@ angular.module('starter.auth')
         'loginModal',
         function ($rootScope, $http, loginModal) {
             this.doLogin = function (credentials) {
-                $http.post('api:3000/api/auth/token', credentials)
+                $http.post('/api/auth/token', credentials)
                      .success(function (data) {
                          $rootScope.$broadcast('auth.loginSucceeded', data.token);
                          loginModal.close();

@@ -4,7 +4,7 @@ describe('The messages service', function () {
         var inbox;
 
         beforeEach(inject(function ($httpBackend, messages) {
-            $httpBackend.expectGET('api:3000/api/messages/inbox').respond([{subject: 'one'}, {subject: 'two'}]);
+            $httpBackend.expectGET('/api/messages/inbox').respond([{subject: 'one'}, {subject: 'two'}]);
             messages.getInbox((err, data) => inbox = data);
             $httpBackend.flush();
         }));
