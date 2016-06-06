@@ -4,9 +4,9 @@ angular.module('starter.messages')
         '$log',
         function (messages, $log) {
             $log.debug('Starting InboxController');
-            this.messages = [
-                {from: {name: 'Fred'}, subject: 'Hi, there!'},
-                {from: {name: 'Anna'}, subject: 'You have won $2.56!'}
-            ];
+            var login = this;
+            messages.getInbox(function processMessagesInInbox(err, msgs) {
+                login.messages = msgs;
+            });
         }
     ]);
