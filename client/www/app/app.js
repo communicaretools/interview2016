@@ -47,7 +47,16 @@ angular.module('starter', ['ionic', 'starter.auth', 'starter.messages'])
           controller: 'ReadController as read'
         }
       }
-    });
+    })
+  .state('app.compose', {
+    url: '/messages/compose',
+    views: {
+      'menuContent': {
+        templateUrl: 'app/messages/compose.html',
+        controller: 'ComposeController as icomposenbox'
+      }
+    }
+  });
   // if none of the above states are matched, use this as the fallback
   $urlRouterProvider.otherwise('/app/messages/inbox');
 });
