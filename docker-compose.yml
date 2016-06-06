@@ -14,7 +14,7 @@ services:
     mongo:
         image: mongo:3.2.5
         volumes:
-            - ./data/mongodb:/data/db
+            - data:/data/db
     client:
         image: sps/msg-client-test
         build: client/
@@ -27,3 +27,6 @@ services:
             - ./client/msgclient:/home/app/webapp
         tty: true
         stdin_open: true
+volumes:
+    data:
+        driver: local
