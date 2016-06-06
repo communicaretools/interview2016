@@ -11,15 +11,17 @@ angular.module('starter.messages')
                 return reply;
             };
 
-            function getInbox() {
+            function getInbox(callback) {
+                $http.get('api:3000/api/messages/inbox')
+                    .success(data => callback(null, data))
+                    .error(err => callback(err, null));
+            }
+
+            function getOutbox(callback) {
 
             }
 
-            function getOutbox() {
-
-            }
-
-            function send(message) {
+            function send(message, callback) {
 
             }
 
