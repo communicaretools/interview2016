@@ -9,20 +9,20 @@ describe('The requireToken middleware', function () {
     var invalidToken = 'asdf';
 
     describe('when encountering a request without a Bearer token', function () {
-        it('should return a 403 with information on where to find the auth action', function (done) {
+        it('should return a 401 with information on where to find the auth action', function (done) {
             var app = request(express().use(requireToken));
             app.get('/')
-               .expect(403, {login: '/api/auth/token'})
+               .expect(401, {login: '/api/auth/token'})
                .end(testApp.end(done));
         });
     });
 
     describe('when encountering a request with an invalid Bearer token', function () {
-        it('should return a 403 with information on where to find the auth action', function (done) {
+        it('should return a 401 with information on where to find the auth action', function (done) {
             var app = request(express().use(requireToken));
             app.get('/')
                .set('Authorization', 'Bearer ' + invalidToken)
-               .expect(403, {login: '/api/auth/token'})
+               .expect(401, {login: '/api/auth/token'})
                .end(testApp.end(done));
         });
     });

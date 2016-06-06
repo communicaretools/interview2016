@@ -5,13 +5,15 @@ var tokens = require('./tokens');
 function requireToken(req, res, next) {
     var header = req.get('Authorization');
     if (!header || !header.startsWith('Bearer ')) {
-        return res.status(403).json({login: '/api/auth/token'});
+        return res.status(401).json({login: '/api/auth/token'});
     }
 
     var token = header.substring('Bearer '.length);
     tokens.validate(token, function handleToken(err, loginInfo) {
         if (err) {
-            res.status(403).json({login: '/api/auth/token'});
+            res.status(401)
+                .set('WWW-Authenticate', 'Bearer')
+                .json({login: '/api/auth/token'});
             return;
         }
         req.userid = loginInfo.userid;

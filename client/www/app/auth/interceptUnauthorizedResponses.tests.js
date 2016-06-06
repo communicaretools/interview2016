@@ -10,11 +10,11 @@ describe('The unauthorized response interceptor', function () {
             };
         });
     }));
-    describe('when detecting a 403 response', function () {
+    describe('when detecting a 401 response', function () {
         var loginRequested, requestSucceeded;
 
         beforeEach(inject(function ($rootScope, $httpBackend, $http) {
-            $httpBackend.expectGET('/secured/endpoint').respond(403);
+            $httpBackend.expectGET('/secured/endpoint').respond(401);
             loginRequested = requestSucceeded = false;
             $rootScope.$on('auth.requestLogin', x => loginRequested = true);
             $http.get('/secured/endpoint').success(x => requestSucceeded = true);

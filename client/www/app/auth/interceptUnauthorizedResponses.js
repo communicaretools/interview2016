@@ -8,8 +8,8 @@ angular.module('starter.auth')
             return {
                 'responseError': function(rejection) {
                     $log.debug('Intercepted a failed request');
-                    if (rejection.status == 403) {
-                        $log.debug('Requesting login because of 403 response to request');
+                    if (rejection.status == 401) {
+                        $log.debug('Requesting login because of 401 response to request');
                         var deferred = $q.defer();
                         pendingRequests.queue(rejection, deferred);
                         $rootScope.$broadcast('auth.requestLogin');
